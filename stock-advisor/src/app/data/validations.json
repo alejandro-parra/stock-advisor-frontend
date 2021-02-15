@@ -1,0 +1,29 @@
+{
+    "standard": [
+        {
+            "type": "required",
+            "message": "Campo requerido"
+        }
+    ],
+    "confirmPassword": [
+        {
+            "type": "required",
+            "message": "Campo requerido"
+        },
+        {
+            "type": "passwordMismatch",
+            "message": "Las contraseñas no coinciden"
+        }
+    ],
+    "email": [
+        {
+            "type": "required",
+            "message": "Campo requerido"
+        },
+        {
+            "type": "email",
+            "message": "Formato de correo inválido"
+        }
+    ]
+
+}

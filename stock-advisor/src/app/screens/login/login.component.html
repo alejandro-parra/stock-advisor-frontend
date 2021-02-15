@@ -1,0 +1,165 @@
+<div class="container login-main-container">
+    <section class="section" *ngIf="currentView===loginState.Login">
+        <p-card class="login-card" title="Login">
+            <div class="p-grid p-fluid p-justify-center login-formGroup-container">
+                
+                <div class="login-text-div">
+                    INICIA SESIÓN Y DISFRUTA DE LA MEJOR <br> EXPERIENCIA DE TRADING
+                </div>
+
+                <div class="p-col-10 p-md-8" [formGroup]="questionnaire">
+                    <div class="p-inputgroup">
+                        <input placeholder="Correo electrónico" pInputText formControlName="email"/>
+                    </div>
+
+                    <div *ngFor="let validation of validations.email">
+                        <small class="p-invalid" *ngIf="questionnaire.get('email').hasError(validation.type) && (questionnaire.get('email').dirty || questionnaire.get('email').touched)">{{validation.message}}</small>
+                    </div>
+                    
+                    <div class="p-inputgroup second-input">
+                        <input placeholder="Contraseña" pInputText formControlName="password" type="password"/>
+                    </div>
+                    <div *ngFor="let validation of validations.standard">
+                        <small class="p-invalid" *ngIf="questionnaire.get('password').hasError(validation.type) && (questionnaire.get('password').dirty || questionnaire.get('password').touched)">{{validation.message}}</small>
+                    </div>
+                    <div class="hint">
+                        <span class="link" (click)="changeCurrentView(loginState.ForgotPassword)">¿Olvidaste tu contraseña?</span>
+                    </div>
+                    <div class="second-input" style="text-align: center;">
+                        <p-button [label]="signInText" [icon]="currentIcon" (onClick)="onSubmit()"  [disabled]="!questionnaire.valid" class="login-button"></p-button>
+                    </div>
+
+                    <div class="second-input register-link">
+                        <span (click)="changeCurrentView(loginState.Register)">¿Aún no eres miembro? <span class="link">Únete</span></span>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </section>
+
+    <section class="section" *ngIf="currentView===loginState.Register">
+       
+        <p-card class="login-card" title="Register">
+            <div class="p-grid p-fluid p-formgrid p-justify-center">
+                <div class="p-col-10 p-md-8">
+                    <p-steps [model]="items" [readonly]="true" [(activeIndex)]="currentStep"></p-steps>
+                    <ng-container *ngIf="currentStep == 0" [formGroup]="questionnaireStep1">
+
+                        <div class="p-inputgroup second-input">
+                            <input placeholder="Nombre" pInputText formControlName="name"/>
+                        </div>
+                        <div *ngFor="let validation of validations.standard">
+                            <small class="p-invalid" *ngIf="questionnaireStep1.get('name').hasError(validation.type) && (questionnaireStep1.get('name').dirty || questionnaireStep1.get('name').touched)">{{validation.message}}</small>
+                        </div>
+
+                        <div class="p-inputgroup second-input" >
+                            <input placeholder="Apellido(s)" pInputText formControlName="lastName"/>
+                        </div>
+                        <div *ngFor="let validation of validations.standard">
+                            <small class="p-invalid" *ngIf="questionnaireStep1.get('lastName').hasError(validation.type) && (questionnaireStep1.get('lastName').dirty || questionnaireStep1.get('lastName').touched)">{{validation.message}}</small>
+                        </div>
+
+                        <div class="p-inputgroup second-input">
+                            <input placeholder="Correo electrónico" pInputText formControlName="email"/>
+                        </div>
+                        <div *ngFor="let validation of validations.email">
+                            <small class="p-invalid" *ngIf="questionnaireStep1.get('email').hasError(validation.type) && (questionnaireStep1.get('email').dirty || questionnaireStep1.get('email').touched)">{{validation.message}}</small>
+                        </div>
+
+                        <div class="second-input" style="text-align: center;">
+                            <p-button class="login-button" label="AVANZAR &gt;" (onClick)="nextStep(1)" [disabled]="!questionnaireStep1.valid"></p-button>
+                        </div>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="currentStep == 1" [formGroup]="questionnaireStep2">
+                        <div class="p-inputgroup second-input">
+                            <input placeholder="Contraseña" pInputText formControlName="password" type="password"/>
+                        </div>
+                        <div *ngFor="let validation of validations.standard">
+                            <small class="p-invalid" *ngIf="questionnaireStep2.get('password').hasError(validation.type) && (questionnaireStep2.get('password').dirty || questionnaireStep2.get('password').touched)">{{validation.message}}</small>
+                        </div>
+    
+                        <div class="p-inputgroup second-input">
+                            <input placeholder="Repetir Contraseña" pInputText formControlName="repeatPassword" type="password"/>
+                        </div>
+                        <div *ngFor="let validation of validations.confirmPassword">
+                            <small class="p-invalid" *ngIf="questionnaireStep2.get('repeatPassword').hasError(validation.type) && (questionnaireStep2.get('repeatPassword').dirty || questionnaireStep2.get('repeatPassword').touched)">{{validation.message}}</small>
+                        </div>
+                        <div class="second-input" style="text-align: center;">
+                            <p-button class="login-button" [label]="registerButtonText" [icon]="currentIcon" (onClick)="onSubmit()" [disabled]="!questionnaireStep2.valid"></p-button>
+                        </div>
+                        <div class="second-input">
+                            <span class="link-back" (click)="nextStep(0)">&lt; Retroceder</span>
+                        </div>
+                    </ng-container>
+                    
+                    <div class="second-input register-link" *ngIf="currentStep == 0">
+                        <span (click)="changeCurrentView(loginState.Login)">¿Ya eres miembro? <span class="link">Inicia sesión</span></span>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </section>
+    <section class="section" *ngIf="currentView===loginState.ForgotPassword">
+        <p-card class="login-card" title="ForgotPassword">
+            <div class="p-grid p-fluid p-justify-center">
+                <div class="p-col-11 p-md-10" [formGroup]="questionnaire">
+
+                    <div class="second-input hint message">
+                        <p>Escribe el correo de la cuenta que quieres recuperar. Te enviaremos un correo con instrucciones para reestablecer tu contraseña. </p>
+                    </div>
+
+                    <div class="p-inputgroup">
+                        <input placeholder="Correo electrónico" pInputText formControlName="email"/>
+                    </div>
+                    <div *ngFor="let validation of validations.email">
+                        <small class="p-invalid" *ngIf="questionnaire.get('email').hasError(validation.type) && (questionnaire.get('email').dirty || questionnaire.get('email').touched)">{{validation.message}}</small>
+                    </div>
+                    <div class="second-input" style="text-align: center;">
+                        <p-button class="login-button" [label]="recoveryButtonText" [icon]="currentIcon" (onClick)="onSubmit()" [disabled]="!questionnaire.valid"></p-button>
+                    </div>
+                    <div class="second-input" style="text-align: center;">
+                        <span class="link-back" (click)="changeCurrentView(loginState.Login)">&lt; Volver al inicio</span>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </section>
+    <section class="section" *ngIf="currentView===loginState.ForgotEmailSent">
+        <p-card class="login-card" title="ForgotEmailSent">
+            <div class="p-grid p-fluid p-justify-center">
+                <div class="p-col-11 p-md-10">
+                    <div class="second-input hint message">
+                        <p>¡Correo enviado exitosamente!</p>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </section>
+    <section class="section" *ngIf="currentView===loginState.UpdatePassword">
+        <p-card class="login-card" title="Login">
+            <div class="p-grid p-fluid p-justify-center">
+                <div class="p-col-11 p-md-10" [formGroup]="questionnaire">
+                    <div class="second-input hint message">
+                        <p>Reestablece tu contraseña:</p>
+                    </div>
+                    <div class="p-inputgroup second-input">
+                        <input placeholder="Nueva contraseña" pInputText formControlName="password" type="password"/>
+                    </div>
+                    <div *ngFor="let validation of validations.standard">
+                        <small class="p-invalid" *ngIf="questionnaire.get('password').hasError(validation.type) && (questionnaire.get('password').dirty || questionnaire.get('password').touched)">{{validation.message}}</small>
+                    </div>
+                    <div class="p-inputgroup second-input">
+                        <input placeholder="Repetir Contraseña" pInputText formControlName="repeatPassword" type="password"/>
+                    </div>
+                    <div *ngFor="let validation of validations.confirmPassword">
+                        <small class="p-invalid" *ngIf="questionnaire.get('repeatPassword').hasError(validation.type) && (questionnaire.get('repeatPassword').dirty || questionnaire.get('repeatPassword').touched)">{{validation.message}}</small>
+                    </div>
+                    <div class="second-input" style="text-align: center;">
+                        <p-button class="login-button" [label]="updatePasswordButtonText" [icon]="currentIcon" (onClick)="onSubmit()" [disabled]="!questionnaire.valid"></p-button>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </section>
+</div>

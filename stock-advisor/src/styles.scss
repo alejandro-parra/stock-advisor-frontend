@@ -1,1 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+
+html{
+    height: 100%;
+    background-color: #EEF0F3;
+}
+
+::placeholder{
+    opacity: 0.6;
+}
+
+.login-button{
+    button{
+        cursor: pointer;
+        width:50% !important;
+    }
+}
+
+.p-tabmenu .p-tabmenu-nav {
+    justify-content: center;
+}
+
+.ng-star-inserted{
+    text-align: initial;
+}
+
+p-dropdown{
+    width: 100% !important;
+}
+
+.p-dropdown{
+    width: 100% !important;
+}
+
+.p-card{
+    box-shadow: none !important;
+}
+
+.p-inputgroup .p-inputtext, .p-fluid .p-inputgroup .p-inputtext{
+    text-align: initial;
+}
+
+.login-main-container .p-card{
+    box-sizing: border-box;
+    box-shadow: none !important;
+    width: 100% !important;
+}
+
+.p-invalid {
+    color: red !important;
+}
