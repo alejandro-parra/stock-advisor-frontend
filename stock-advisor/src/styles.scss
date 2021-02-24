@@ -3,6 +3,7 @@
 html{
     height: 100%;
     background-color: #EEF0F3;
+    font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 ::placeholder{
@@ -13,6 +14,10 @@ html{
     button{
         cursor: pointer;
         width:50% !important;
+        background-color: #00BB6B !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 1rem;
     }
 }
 
@@ -36,6 +41,17 @@ p-dropdown{
     box-shadow: none !important;
 }
 
+.content-container {
+
+    .p-input-icon-left, .p-input-icon-right {
+        width: 100% !important;
+    }
+
+    .p-input-icon-right > .p-inputtext {
+        width: 100%!important;
+    }
+}
+
 .p-inputgroup .p-inputtext, .p-fluid .p-inputgroup .p-inputtext{
     text-align: initial;
 }
@@ -49,3 +65,29 @@ p-dropdown{
 .p-invalid {
     color: red !important;
 }
+
+.global-overlay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    color: #ffffff;
+    min-height: 100%;
+    width: 100%;
+    z-index: 1000000000;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+    border-color: #00BB6B !important;
+    color: #00BB6B !important;
+}
+

@@ -10,18 +10,23 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {PasswordModule} from 'primeng/password';
+import { PasswordModule} from 'primeng/password';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { StepsModule } from 'primeng/steps';
-import {ScrollPanelModule} from 'primeng/scrollpanel';
-import {TableModule} from 'primeng/table';
+import { ScrollPanelModule} from 'primeng/scrollpanel';
+import { TableModule} from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
 import { LoginComponent } from './screens/login/login.component';
 import { NavbarComponent } from './screens/navbar/navbar.component';
 import { StockSearchComponent } from './screens/stock-search/stock-search.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MenubarModule} from 'primeng/menubar';
+import { LoadingOverlayComponent } from './screens/loading-overlay/loading-overlay.component';
+import { StockDetailsComponent } from './screens/stock-details/stock-details.component';
+import { MyOperationsComponent } from './screens/my-operations/my-operations.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 
@@ -30,7 +35,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    StockSearchComponent
+    StockSearchComponent,
+    LoadingOverlayComponent,
+    StockDetailsComponent,
+    MyOperationsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +58,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BadgeModule,
     ToastModule,
     ScrollingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MenubarModule,
+    ProgressSpinnerModule
   ],
   entryComponents: [
     

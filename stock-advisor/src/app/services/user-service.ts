@@ -15,6 +15,7 @@ export class UserService {
   constructor(private router: Router, private http: HttpClient, private modalsAlertsService:ModalsAlertsService) { 
   }
 
+
   ngOnInit() {
     this.ifLoggedIn();
   }
