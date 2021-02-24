@@ -1,0 +1,46 @@
+<div class="main-container">
+    <app-navbar></app-navbar>
+    <app-loading-overlay *ngIf="!loaded"></app-loading-overlay>
+    <div class="content-container" *ngIf="loaded">
+        <p><b>{{stockDetails.stockName}} - Detalle de stock</b></p>
+        <p class="current-price">
+            Precio actual: <b>${{stockDetails.actualPrice}}</b>
+        </p>
+        <div class="graph-container">
+
+        </div>
+        <p><b>Proyección Stock Advisor</b></p>
+        <div class="projection-card">
+            <p style="text-align: center; margin-bottom: 1.5rem;">Segun nuestros algoritmos, esta compañía tiene un <span [ngClass]="{'green' : stockDetails.typeOfPrediction === 'positive', 'red' : stockDetails.typeOfPrediction === 'negative'}">{{stockDetails.rateOfPrediction}}%</span> de probabilidad de que vaya a la alza. Recomendamos <span [ngClass]="{'green' : stockDetails.typeOfPrediction === 'positive', 'red' : stockDetails.typeOfPrediction === 'negative'}">{{actionText}} acciones</span></p>
+            <div class="button-tray">
+                <button class="button buy-button" (click)="buyActions()">Comprar</button>
+                <button class="button sell-button" (click)="sellActions()">Vender</button>
+            </div>
+        </div>
+
+        <p><b>Mis Operaciones en {{ stockDetails.stockName }}</b>  <span class="view-all-button" (click)="navigateMyOperations()">Ver todos &gt;</span>  </p>
+        <div class="operation-card" *ngFor="let operation of stockDetails.myOperations">
+            <div class="company">
+                <img src="{{operation.companyImg}}" alt="company-image">
+                <div class="search-text">
+                    <p class="title">{{ operation.amountBought }} unidades</p>
+                    <p>{{ operation.creationDate }}<span *ngIf="operation.status === 'closed'">-{{ operation.closingDate }}</span></p>
+                </div>
+            </div>
+            <div class="results">
+                <div class="field">
+                    <p><b>${{operation.startingPrice}}</b></p>
+                    <p>Precio de compra</p>
+                </div>
+                <div class="field">
+                    <p><b [ngClass]="{'green': operation.closingPrice - operation.startingPrice > 0, 'red': operation.closingPrice - operation.startingPrice < 0 }">{{(operation.closingPrice - operation.startingPrice)/operation.closingPrice * 100}}%</b></p>
+                    <p>Rendimiento</p>
+                </div>
+                <div class="field">
+                    <p><b>${{operation.closingPrice}}</b></p>
+                    <p>Precio de venta</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

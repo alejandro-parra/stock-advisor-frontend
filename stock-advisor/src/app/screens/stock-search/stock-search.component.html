@@ -1,1 +1,26 @@
-<p>stock-search works!</p>
+<div class="main-container">
+    <app-navbar></app-navbar>
+    <app-loading-overlay *ngIf="!loaded"></app-loading-overlay>
+    <div class="content-container" *ngIf="loaded">
+        <p> <b>Buscador de stocks</b> </p>
+        <div class="searchbar">
+            <span class="p-input-icon-right">
+                <i class="{{ currentIcon }}"></i>
+                <input type="text" placeholder="Busca un stock" class="input" pInputText [(ngModel)]="searchString" (ngModelChange)="search()">         
+            </span>
+        </div>
+        <div class="search-results" *ngIf="searchResults.length !== 0">
+            <div class="search-entry" *ngFor="let company of searchResults; let i = index" (click)="checkStockDetails(company, i)" [ngClass]="{'white': i % 2 === 0, 'grey': i % 2 === 1}">
+                <img src="{{company.companyImage}}" alt="company-image">
+                <div class="search-text">
+                    <p class="title">{{ company.stockName }}</p>
+                    <p>{{ company.stockCode }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

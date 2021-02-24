@@ -1,0 +1,65 @@
+<div class="main-container">
+    <app-navbar></app-navbar>
+    <app-loading-overlay *ngIf="!loaded"></app-loading-overlay>
+    <div class="content-container" *ngIf="loaded">
+        <p><b>Mis operaciones</b></p>
+        <div class="tab-menu">
+            <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+        </div>
+        <ng-container *ngIf="this.activeItem.id === '0'">
+            <div class="operation-card" *ngFor="let operation of myOperations.activeOperations">
+                <div class="company">
+                    <img src="{{operation.companyImg}}" alt="company-image">
+                    <div class="search-text">
+                        <p class="title">{{ operation.amountBought }} unidades</p>
+                        <p>{{ operation.creationDate }}<span *ngIf="operation.status === 'closed'">-{{ operation.closingDate }}</span></p>
+                    </div>
+                </div>
+                <div class="results">
+                    <div class="field">
+                        <p><b>${{operation.startingPrice}}</b></p>
+                        <p>Precio de compra</p>
+                    </div>
+                    <div class="field">
+                        <p><b [ngClass]="{'green': operation.closingPrice - operation.startingPrice > 0, 'red': operation.closingPrice - operation.startingPrice < 0 }">{{(operation.closingPrice - operation.startingPrice)/operation.closingPrice * 100}}%</b></p>
+                        <p>Rendimiento</p>
+                    </div>
+                    <div class="field">
+                        <p><b>${{operation.closingPrice}}</b></p>
+                        <p>Precio de venta</p>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="this.activeItem.id === '1'">
+            <div class="operation-card" *ngFor="let operation of myOperations.closedOperations">
+                <div class="company">
+                    <img src="{{operation.companyImg}}" alt="company-image">
+                    <div class="search-text">
+                        <p class="title">{{ operation.amountBought }} unidades</p>
+                        <p>{{ operation.creationDate }}<span *ngIf="operation.status === 'closed'">-{{ operation.closingDate }}</span></p>
+                    </div>
+                </div>
+                <div class="results">
+                    <div class="field">
+                        <p><b>${{operation.startingPrice}}</b></p>
+                        <p>Precio de compra</p>
+                    </div>
+                    <div class="field">
+                        <p><b [ngClass]="{'green': operation.closingPrice - operation.startingPrice > 0, 'red': operation.closingPrice - operation.startingPrice < 0 }">{{(operation.closingPrice - operation.startingPrice)/operation.closingPrice * 100}}%</b></p>
+                        <p>Rendimiento</p>
+                    </div>
+                    <div class="field">
+                        <p><b>${{operation.closingPrice}}</b></p>
+                        <p>Precio de venta</p>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        
+    </div>
+</div>
+
+
