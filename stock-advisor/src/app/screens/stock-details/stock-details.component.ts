@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
+import { Operation } from 'src/app/interfaces/MyOperations';
 import { StockDetailsData } from 'src/app/interfaces/StockDetails';
 import { StocksService } from 'src/app/services/stocks-service';
+import { ConfirmPurchasePopupComponent } from '../confirm-purchase-popup/confirm-purchase-popup.component';
+import { SelectOperationPopupComponent } from '../select-operation-popup/select-operation-popup.component';
 
 @Component({
   selector: 'app-stock-details',
@@ -13,21 +17,11 @@ export class StockDetailsComponent implements OnInit {
   stockDetails: StockDetailsData;
   loaded = true;
   actionText = "comprar";
+  activeOperations: Operation[] = [];
 
-
-  constructor(private router: Router, private stocksService: StocksService, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private stocksService: StocksService, private activatedRoute: ActivatedRoute, public dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      let id = params['stockId'];
-      if(id){
-        this.stockId = id;
-        this.fetchStockDetails();
-      }else{
-        this.router.navigate(["search"])
-      }
-    });
-
     this.stockDetails = {
       stockName: 'Tesla',
       id: 1,
@@ -54,16 +48,40 @@ export class StockDetailsComponent implements OnInit {
         }
       ]
     }
+    this.activatedRoute.queryParams.subscribe(params => {
+      let id = params['stockId'];
+      if(id){
+        this.stockId = id;
+        this.fetchStockDetails();
+      }else{
+        this.router.navigate(["search"])
+      }
+    });
+
+    
   }
 
   fetchStockDetails() {
     //Llamar al endpoint
+    this.setActionText();
+    this.defineActiveOperations();
+    this.loaded = true;
+  }
+
+  defineActiveOperations() {
+    for(let operation of this.stockDetails.myOperations) {
+      if(operation.status === 'active') {
+        this.activeOperations.push(operation);
+      }
+    }
+  }
+
+  setActionText() {
     if(this.stockDetails.typeOfPrediction === 'positive') {
       this.actionText = "comprar";
     } else {
       this.actionText = "vender";
     }
-    this.loaded = true;
   }
 
   navigateMyOperations() {
@@ -71,11 +89,52 @@ export class StockDetailsComponent implements OnInit {
   }
 
   buyActions() {
-  
+    const ref = this.dialogService.open(ConfirmPurchasePopupComponent, {
+      header: 'Confirma tu compra',
+      width: '70%',
+      data: {
+        stockId: this.stockDetails.id,
+        stockCode: this.stockDetails.stockCode,
+        companyImg: this.stockDetails.companyImg,
+        stockName: this.stockDetails.stockName,
+        creationDate: this.createDateString(),
+        amountBought: 0,
+        status: 'active',
+        startingPrice: this.stockDetails.actualPrice
+      },
+    });
+    ref.onClose.subscribe((operation) => {
+      if(operation !== undefined || operation !== null){
+        //Llamar a la API pa vender
+      }
+    });
   }
 
   sellActions() {
-    
+    const ref = this.dialogService.open(SelectOperationPopupComponent, {
+      header: 'Elige la operación a vender',
+      width: '70%',
+      data: this.activeOperations,
+    });
+    ref.onClose.subscribe((operation) => {
+      if(operation !== undefined || operation !== null){
+        //Llamar a la API pa vender
+      }
+    });
+  }
+
+  createDateString() {
+    let date = new Date()
+
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+
+    if(month < 10) {
+      return `${day}-0${month}-${year}`
+    } else {
+      return `${day}-${month}-${year}`
+    }
   }
 
 }

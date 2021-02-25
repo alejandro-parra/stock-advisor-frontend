@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { MyOperationsData } from 'src/app/interfaces/MyOperations';
+import { MyOperationsData, Operation } from 'src/app/interfaces/MyOperations';
+import { StocksService } from 'src/app/services/stocks-service';
 
 @Component({
   selector: 'app-my-operations',
@@ -17,7 +19,7 @@ export class MyOperationsComponent implements OnInit {
   activeItem: MenuItem;
 
   
-  constructor() { }
+  constructor(private router: Router, private stocksService: StocksService) { }
 
   ngOnInit(): void {
     this.setupUI();
@@ -87,6 +89,10 @@ export class MyOperationsComponent implements OnInit {
       }
     ];
     this.activeItem = this.items[0];
+  }
+
+  navigateStockDetails(operation: Operation) {
+    this.router.navigate(['stockdetails'], { queryParams: {stockId: operation.stockId}});
   }
 
 

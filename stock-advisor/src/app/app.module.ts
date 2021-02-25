@@ -27,6 +27,8 @@ import { LoadingOverlayComponent } from './screens/loading-overlay/loading-overl
 import { StockDetailsComponent } from './screens/stock-details/stock-details.component';
 import { MyOperationsComponent } from './screens/my-operations/my-operations.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConfirmPurchasePopupComponent } from './screens/confirm-purchase-popup/confirm-purchase-popup.component';
+import { SelectOperationPopupComponent } from './screens/select-operation-popup/select-operation-popup.component';
 
 
 
@@ -38,7 +40,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     StockSearchComponent,
     LoadingOverlayComponent,
     StockDetailsComponent,
-    MyOperationsComponent
+    MyOperationsComponent,
+    ConfirmPurchasePopupComponent,
+    SelectOperationPopupComponent
   ],
   imports: [
     BrowserModule,

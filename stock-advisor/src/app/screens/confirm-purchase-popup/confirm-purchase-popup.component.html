@@ -1,0 +1,22 @@
+<div class="main-popup-container">
+    <div class="operation-card">
+        <div class="company">
+            <img src="{{operation.companyImg}}" alt="company-image">
+            <div class="search-text">
+                <p class="title">{{ operation.amountBought }} unidades</p>
+                <p>{{ operation.creationDate }}</p>
+            </div>
+        </div>
+        <div class="results">
+            <div class="field">
+                <p><b>${{operation.startingPrice}}</b></p>
+                <p>Precio de compra</p>
+            </div>
+        </div>
+    </div>
+    <p style="text-align: center;">Selecciona el número de acciones que quieres comprar</p>
+    <div class="buy-tray">
+        <input type="text" pInputText class="number-stocks-input" placeholder="numero de stocks" [(ngModel)]="operation.amountBought">
+        <button type="button" class="buy-button" (click)="confirmPurchase()" [disabled]="operation.amountBought === 0">Confirmar</button>
+    </div>
+</div>

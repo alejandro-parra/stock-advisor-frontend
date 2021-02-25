@@ -118,3 +118,19 @@
 .red {
     color: #FF3656;
 }
+
+.hover {
+    &:hover {
+        background-color: #00BB6B;
+        color: #fefefe;
+        cursor: pointer;
+
+        .green {
+            color: #fefefe;
+        }
+
+        .red {
+            color: #fefefe;
+        }
+    }
+}

@@ -7,7 +7,7 @@
             <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
         </div>
         <ng-container *ngIf="this.activeItem.id === '0'">
-            <div class="operation-card" *ngFor="let operation of myOperations.activeOperations">
+            <div class="operation-card hover" *ngFor="let operation of myOperations.activeOperations" (click)="navigateStockDetails(operation)">
                 <div class="company">
                     <img src="{{operation.companyImg}}" alt="company-image">
                     <div class="search-text">

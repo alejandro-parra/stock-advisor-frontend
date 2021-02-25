@@ -14,7 +14,7 @@
             <p style="text-align: center; margin-bottom: 1.5rem;">Segun nuestros algoritmos, esta compañía tiene un <span [ngClass]="{'green' : stockDetails.typeOfPrediction === 'positive', 'red' : stockDetails.typeOfPrediction === 'negative'}">{{stockDetails.rateOfPrediction}}%</span> de probabilidad de que vaya a la alza. Recomendamos <span [ngClass]="{'green' : stockDetails.typeOfPrediction === 'positive', 'red' : stockDetails.typeOfPrediction === 'negative'}">{{actionText}} acciones</span></p>
             <div class="button-tray">
                 <button class="button buy-button" (click)="buyActions()">Comprar</button>
-                <button class="button sell-button" (click)="sellActions()">Vender</button>
+                <button class="button sell-button" (click)="sellActions()" *ngIf="activeOperations.length > 0">Vender</button>
             </div>
         </div>
 
