@@ -6,6 +6,7 @@ import { StockDetailsData } from 'src/app/interfaces/StockDetails';
 import { StocksService } from 'src/app/services/stocks-service';
 import { ConfirmPurchasePopupComponent } from '../confirm-purchase-popup/confirm-purchase-popup.component';
 import { SelectOperationPopupComponent } from '../select-operation-popup/select-operation-popup.component';
+import { createChart } from 'lightweight-charts';
 
 @Component({
   selector: 'app-stock-details',
@@ -58,6 +59,7 @@ export class StockDetailsComponent implements OnInit {
       }
     });
 
+    
     
   }
 

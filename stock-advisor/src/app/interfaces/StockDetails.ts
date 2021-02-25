@@ -9,18 +9,17 @@ export interface StockDetailsData {
     companyImg: string,
     actualPrice: number,
     updateDate: string, //una fecha en string
-    graphData: StockGraphData
+    graphData: any,
     rateOfPrediction: number, //que tanto va a cambiar
-    typeOfPrediction: string, //alza o baja
+    typeOfPrediction: string, //positive o negative
     myOperations: Operation[]
 }
 
 export interface StockGraphData {
-    /* Aqui si ayudenme a ver que pedo jaja
-    Lo que si se es que va a haber filtro por:
-    - Hora
-    - Dia
-    - Semana
-    - Mes
-    - Año */
+    history: StockGraphEntry[]
+}
+
+export interface StockGraphEntry {
+    time: string, //un string que se pueda convertir en date ejemplo '2018-10-19'
+    value: number //valor del stock en ese tiempo
 }
