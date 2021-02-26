@@ -4,7 +4,7 @@ import { Operation } from "./MyOperations";
 
 export interface StockDetailsData {
     stockName: string,
-    id: number,
+    id?: number,
     stockCode: string,
     companyImg: string,
     actualPrice: number,

@@ -6,7 +6,7 @@
         <p class="current-price">
             Precio actual: <b>${{stockDetails.actualPrice}}</b>
         </p>
-        <div class="graph-container">
+        <div class="graph-container" #graphContainer (window:resize)="onResize($event)">
 
         </div>
         <p><b>Proyección Stock Advisor</b></p>
