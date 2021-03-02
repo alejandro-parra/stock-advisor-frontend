@@ -29,8 +29,7 @@ import { MyOperationsComponent } from './screens/my-operations/my-operations.com
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmPurchasePopupComponent } from './screens/confirm-purchase-popup/confirm-purchase-popup.component';
 import { SelectOperationPopupComponent } from './screens/select-operation-popup/select-operation-popup.component';
-
-
+import {MenuItem} from 'primeng/api';
 
 @NgModule({
   declarations: [
