@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserService } from 'src/app/services/user-service';
@@ -11,8 +11,9 @@ import { UserService } from 'src/app/services/user-service';
 export class NavbarComponent implements OnInit {
   items: MenuItem[];
   activeItem: MenuItem;
+  height: number;
 
-  constructor(private router: Router, public userService: UserService){ }
+  constructor(public router: Router, public userService: UserService){ }
   ngOnInit(): void {
     this.items = [
       {label: 'Buscador', icon: 'pi pi-search', routerLink: ['/search']},
@@ -24,5 +25,11 @@ export class NavbarComponent implements OnInit {
     else if(this.router.url === '/myoperations'){
       this.activeItem = this.items[1];
     }
+    this.onResize();
+  }
+  
+  @HostListener('window:resize')
+  onResize() {
+    this.height = document.getElementById("navbar").offsetHeight;
   }
 }
