@@ -20,37 +20,41 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   actionText = "comprar";
   activeOperations: Operation[] = [];
   chart: any
+  demo = true;
   @ViewChild('graphContainer') graph: ElementRef;
 
   constructor(private router: Router, private stocksService: StocksService, private activatedRoute: ActivatedRoute, public dialogService: DialogService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.stockDetails = {
-      stockName: 'Tesla',
-      id: 1,
-      stockCode: 'TSL',
-      companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-      actualPrice: 250.00,
-      updateDate: '21/02/2021',
-      graphData: {},
-      rateOfPrediction: 70,
-      typeOfPrediction: 'positive',
-      myOperations: [
-        {
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        }
-      ]
+    if(this.demo){
+      this.stockDetails = {
+        stockName: 'Tesla',
+        id: 1,
+        stockCode: 'TSL',
+        companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+        actualPrice: 250.00,
+        updateDate: '21/02/2021',
+        graphData: {},
+        rateOfPrediction: 70,
+        typeOfPrediction: 'positive',
+        myOperations: [
+          {
+            _id: 1,
+            stockId: 1,
+            stockCode: 'TSL',
+            companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+            stockName: 'Tesla',
+            creationDate: '12/01/2021',
+            amountBought: 3,
+            status: 'active',
+            startingPrice: 200.00,
+            closingDate: '12/03/2021',
+            closingPrice: 250.00
+          }
+        ]
+      }
     }
+    
     this.activatedRoute.queryParams.subscribe(params => {
       let id = params['stockId'];
       if(id){
@@ -69,11 +73,23 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
     this.setChart();
   }
 
-  fetchStockDetails() {
-    //Llamar al endpoint
-    this.setActionText();
-    this.defineActiveOperations();
-    this.loaded = true;
+  async fetchStockDetails() {
+    if(this.demo) {
+      this.setActionText();
+      this.defineActiveOperations();
+      this.loaded = true;
+    } else {
+      try {
+        let response = await this.stocksService.getStockDetails({stockCode: this.stockId});
+        this.stockDetails = response as StockDetailsData;
+        this.setActionText();
+        this.defineActiveOperations();
+        this.loaded = true;
+      } catch(err) {
+        console.log(err);
+        this.loaded = true;
+      }
+    }
   }
 
   defineActiveOperations() {
@@ -113,9 +129,20 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
     });
     ref.onClose.subscribe((operation) => {
       if(operation !== undefined || operation !== null){
-        //Llamar a la API pa vender
+        this.buyStocks(operation)
       }
     });
+  }
+
+  async buyStocks(operation: Operation) {
+    if(!this.demo) {
+      try {
+        let newOperation: any = this.stocksService.buyStocks(operation);
+        this.stockDetails.myOperations.push(newOperation as Operation);
+      } catch(err) {
+        console.log(err)
+      }
+    }
   }
 
   sellActions() {
@@ -126,9 +153,24 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
     });
     ref.onClose.subscribe((operation) => {
       if(operation !== undefined || operation !== null){
-        //Llamar a la API pa vender
+        this.sellStocks(operation);
       }
     });
+  }
+
+  async sellStocks(operation: Operation) {
+    if(!this.demo) {
+      try {
+        let response = this.stocksService.sellStocks(operation);
+        for(let [index, history] of this.stockDetails.myOperations.entries()) {
+          if(history._id === operation._id) {
+            this.stockDetails.myOperations.splice(index, 1);
+          }
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    }
   }
 
   createDateString() {
