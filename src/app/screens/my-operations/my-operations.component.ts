@@ -12,7 +12,7 @@ import { StocksService } from 'src/app/services/stocks-service';
 export class MyOperationsComponent implements OnInit {
   loaded = true;
   myOperations: MyOperationsData;
-
+  demo = true;
 
   //tab navigation variables
   items: MenuItem[];
@@ -26,51 +26,61 @@ export class MyOperationsComponent implements OnInit {
     this.fetchMyOperationData();
   }
 
-  fetchMyOperationData() {
-    this.myOperations = {
-      activeOperations: [
-        {
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        },{
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        },{
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        }
-      ], closedOperations: [
-
-      ]
+  async fetchMyOperationData() {
+    if(this.demo) {
+      this.myOperations = {
+        activeOperations: [
+          {
+            _id: 1,
+            stockId: 1,
+            stockCode: 'TSL',
+            companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+            stockName: 'Tesla',
+            creationDate: '12/01/2021',
+            amountBought: 3,
+            status: 'active',
+            startingPrice: 200.00,
+            closingDate: '12/03/2021',
+            closingPrice: 250.00
+          },{
+            _id: 1,
+            stockId: 1,
+            stockCode: 'TSL',
+            companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+            stockName: 'Tesla',
+            creationDate: '12/01/2021',
+            amountBought: 3,
+            status: 'active',
+            startingPrice: 200.00,
+            closingDate: '12/03/2021',
+            closingPrice: 250.00
+          },{
+            _id: 1,
+            stockId: 1,
+            stockCode: 'TSL',
+            companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+            stockName: 'Tesla',
+            creationDate: '12/01/2021',
+            amountBought: 3,
+            status: 'active',
+            startingPrice: 200.00,
+            closingDate: '12/03/2021',
+            closingPrice: 250.00
+          }
+        ], closedOperations: [
+  
+        ]
+      }
+      this.loaded = true;
+    } else {
+      try {
+        let response: any = this.stocksService.getMyOperations({});
+        this.myOperations = response as MyOperationsData;
+        this.loaded = true;
+      } catch(err) {
+        this.loaded = true;
+      }
     }
-    this.loaded = true;
   }
 
   setupUI() {

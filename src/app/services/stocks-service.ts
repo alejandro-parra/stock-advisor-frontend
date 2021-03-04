@@ -12,6 +12,7 @@ export class StocksService {
   //Authenticated observable, starting value is false
   public authState = new BehaviorSubject(false);
   public userInfo: any = null;
+  url = 'http://localhost:3000/validate-token';
 
   constructor(private router: Router, private http: HttpClient, private modalsAlertsService:ModalsAlertsService, private userService: UserService) {
   }
@@ -23,6 +24,102 @@ export class StocksService {
     //put all the publishSubjects to null
   }
 
-  
+  searchStocks(data){
+    return new Promise(async (resolve,reject) => {
+      data.userId = this.userService.userInfo.id
+      let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);  
+      this.http.post(this.url+'/search-stock', data, { headers:headers_object }).subscribe((response:any)=>{
+        if(response){
+          console.log(response)
+          resolve(response)        
+        }
+      }, (error) => { 
+        console.log(error)
+        if(error.status != 200){
+          this.modalsAlertsService.openErrorToast("Error código " + error.status,error.error.error)
+          reject(error)
+        }
+      })
+    });
+  }
 
+  getStockDetails(data){
+    return new Promise(async (resolve,reject) => {
+      data.userId = this.userService.userInfo.id
+      let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);  
+      this.http.post(this.url+'/get-stock-details', data, { headers:headers_object }).subscribe((response:any)=>{
+        if(response){
+          console.log(response)
+          resolve(response)        
+        }
+      }, (error) => { 
+        console.log(error)
+        if(error.status != 200){
+          this.modalsAlertsService.openErrorToast("Error código " + error.status,error.error.error)
+          this.router.navigate(['search']);
+          reject(error)
+        }
+      })
+    });
+  }
+
+  buyStocks(data){
+    return new Promise(async (resolve,reject) => {
+      data.userId = this.userService.userInfo.id
+      let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);  
+      this.http.post(this.url+'/buy-stock', data, { headers:headers_object }).subscribe((response:any)=>{
+        if(response){
+          console.log(response)
+          this.modalsAlertsService.openConfirmationToast("Compra exitosa", `Ya tienes tus operaciones en ${response.stockName}`);
+          resolve(response)        
+        }
+      }, (error) => { 
+        console.log(error)
+        if(error.status != 200){
+          this.modalsAlertsService.openErrorToast("Error código " + error.status,error.error.error)
+          reject(error)
+        }
+      })
+    });
+  }
+
+  sellStocks(data){
+    return new Promise(async (resolve,reject) => {
+      data.userId = this.userService.userInfo.id
+      let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);  
+      this.http.post(this.url+'/sell-stock', data, { headers:headers_object }).subscribe((response:any)=>{
+        if(response){
+          console.log(response)
+          this.modalsAlertsService.openConfirmationToast("Venta exitosa", `Operación cerrada exitosamente`);
+          resolve(response)        
+        }
+      }, (error) => { 
+        console.log(error)
+        if(error.status != 200){
+          this.modalsAlertsService.openErrorToast("Error código " + error.status,error.error.error)
+          reject(error)
+        }
+      })
+    });
+  }
+
+  getMyOperations(data){
+    return new Promise(async (resolve,reject) => {
+      data.userId = this.userService.userInfo.id
+      let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);  
+      this.http.post(this.url+'/my-operations', data, { headers:headers_object }).subscribe((response:any)=>{
+        if(response){
+          console.log(response)
+          resolve(response)        
+        }
+      }, (error) => { 
+        console.log(error)
+        if(error.status != 200){
+          this.modalsAlertsService.openErrorToast("Error código " + error.status,error.error.error)
+          this.router.navigate(['search']);
+          reject(error)
+        }
+      })
+    });
+  }
 }

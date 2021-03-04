@@ -17,33 +17,47 @@ enum SearchbarIcon {
 
 export class StockSearchComponent implements OnInit {
   loaded = true;
-  searchData: SearchStocksData = {stocks: [
-    {
-      stockCode: 'AWS',
-      companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-      stockName: 'BMW',
-      id: 1
-    },
-    {
-      stockCode: 'KFC',
-      companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-      stockName: 'Tesla',
-      id: 2
-    }
-  ]}
+  demo = true;
+  searchData: SearchStocksData;
   currentIcon: SearchbarIcon = SearchbarIcon.search;
   searchResults: StockSearchEntry[] = []
   searchString: "";
   constructor(private router: Router, private stocksService: StocksService) { }
 
   ngOnInit(): void {
+    if(this.demo) {
+      this.searchData = { stocks: [
+        {
+          stockCode: 'AWS',
+          companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+          stockName: 'BMW',
+          id: 1
+        },
+        {
+          stockCode: 'KFC',
+          companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+          stockName: 'Tesla',
+          id: 2
+        }
+      ]}
+    }
     this.fetchStockData();
   }
 
-  fetchStockData() {
-    //llamar al endpoint
-    this.sortStocks();
-    this.loaded = true;
+  async fetchStockData() {
+    if(!this.demo) {
+      try {
+        let response = await this.stocksService.searchStocks({searchString: ""})
+        this.sortStocks();
+        this.loaded = true;
+      } catch (err)  {
+        console.log(err)
+        this.loaded = true;
+      };
+    } else {
+      this.sortStocks();
+      this.loaded = true;
+    }
   }
 
   search() {
