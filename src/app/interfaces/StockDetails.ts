@@ -20,6 +20,6 @@ export interface StockGraphData {
 }
 
 export interface StockGraphEntry {
-    time: string, //un string que se pueda convertir en date ejemplo '2018-10-19'
-    value: number //valor del stock en ese tiempo
+    date: any, //un string que se pueda convertir en date ejemplo '2018-10-19'
+    close: number //valor del stock en ese tiempo
 }

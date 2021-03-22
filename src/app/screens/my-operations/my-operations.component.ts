@@ -12,13 +12,13 @@ import { StocksService } from 'src/app/services/stocks-service';
 export class MyOperationsComponent implements OnInit {
   loaded = true;
   myOperations: MyOperationsData;
-  demo = true;
+  demo = false;
 
   //tab navigation variables
   items: MenuItem[];
   activeItem: MenuItem;
 
-  
+
   constructor(private router: Router, private stocksService: StocksService) { }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class MyOperationsComponent implements OnInit {
   }
 
   async fetchMyOperationData() {
-    if(this.demo) {
+    if (this.demo) {
       this.myOperations = {
         activeOperations: [
           {
@@ -42,7 +42,7 @@ export class MyOperationsComponent implements OnInit {
             startingPrice: 200.00,
             closingDate: '12/03/2021',
             closingPrice: 250.00
-          },{
+          }, {
             _id: 1,
             stockId: 1,
             stockCode: 'TSL',
@@ -54,7 +54,7 @@ export class MyOperationsComponent implements OnInit {
             startingPrice: 200.00,
             closingDate: '12/03/2021',
             closingPrice: 250.00
-          },{
+          }, {
             _id: 1,
             stockId: 1,
             stockCode: 'TSL',
@@ -68,7 +68,7 @@ export class MyOperationsComponent implements OnInit {
             closingPrice: 250.00
           }
         ], closedOperations: [
-  
+
         ]
       }
       this.loaded = true;
@@ -77,7 +77,7 @@ export class MyOperationsComponent implements OnInit {
         let response: any = this.stocksService.getMyOperations({});
         this.myOperations = response as MyOperationsData;
         this.loaded = true;
-      } catch(err) {
+      } catch (err) {
         this.loaded = true;
       }
     }
@@ -85,15 +85,15 @@ export class MyOperationsComponent implements OnInit {
 
   setupUI() {
     this.items = [
-      { 
-        label: 'Activas', id:'0',
-        command:()=>{
+      {
+        label: 'Activas', id: '0',
+        command: () => {
           this.activeItem = this.items[0]
         }
       },
-      { 
-        label: 'Cerradas', id:'1',
-        command:()=>{
+      {
+        label: 'Cerradas', id: '1',
+        command: () => {
           this.activeItem = this.items[1]
         }
       }
@@ -102,7 +102,7 @@ export class MyOperationsComponent implements OnInit {
   }
 
   navigateStockDetails(operation: Operation) {
-    this.router.navigate(['stockdetails'], { queryParams: {stockId: operation.stockId}});
+    this.router.navigate(['stockdetails'], { queryParams: { stockId: operation.stockId } });
   }
 
 

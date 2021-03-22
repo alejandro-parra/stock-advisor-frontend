@@ -5,7 +5,7 @@ export interface SearchStocksData {
 }
 
 export interface StockSearchEntry {
-    id?: number,
+    _id?: number,
     stockCode: string,
     stockName: String,
     companyImage: string
