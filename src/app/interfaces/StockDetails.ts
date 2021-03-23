@@ -6,7 +6,7 @@ export interface StockDetailsData {
     stockName: string,
     id?: number,
     stockCode: string,
-    companyImg: string,
+    companyImage: string,
     actualPrice: number,
     updateDate: string, //una fecha en string
     graphData: any,
