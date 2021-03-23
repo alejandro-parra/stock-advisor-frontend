@@ -10,7 +10,7 @@ import { StocksService } from 'src/app/services/stocks-service';
   styleUrls: ['./my-operations.component.scss']
 })
 export class MyOperationsComponent implements OnInit {
-  loaded = true;
+  loaded = false;
   myOperations: MyOperationsData;
   demo = false;
 
@@ -74,7 +74,8 @@ export class MyOperationsComponent implements OnInit {
       this.loaded = true;
     } else {
       try {
-        let response: any = this.stocksService.getMyOperations({});
+        let response: any = await this.stocksService.getMyOperations({});
+        console.log(response);
         this.myOperations = response as MyOperationsData;
         this.loaded = true;
       } catch (err) {

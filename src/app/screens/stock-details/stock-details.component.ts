@@ -43,7 +43,7 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
             _id: 1,
             stockId: 1,
             stockCode: 'TSL',
-            companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
+            companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
             stockName: 'Tesla',
             creationDate: '12/01/2021',
             amountBought: 3,

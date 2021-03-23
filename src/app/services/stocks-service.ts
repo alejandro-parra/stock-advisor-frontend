@@ -86,6 +86,7 @@ export class StocksService {
   sellStocks(data) {
     return new Promise(async (resolve, reject) => {
       data.userId = this.userService.userInfo.id
+      console.log(data)
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/sell-stock', data, { headers: headers_object }).subscribe((response: any) => {
         if (response) {

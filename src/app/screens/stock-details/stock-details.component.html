@@ -22,7 +22,7 @@
         <ng-container *ngIf="loaded">
             <div class="operation-card" *ngFor="let operation of stockDetails.myOperations">
                 <div class="company">
-                    <img src="{{operation.companyImage}}" alt="company-image">
+                    <img src="{{operation.companyImg}}" alt="company-image">
                     <div class="search-text">
                         <p class="title">{{ operation.amountBought }} unidades</p>
                         <p>{{ operation.creationDate }}<span *ngIf="operation.status === 'closed'">-{{ operation.closingDate }}</span></p>
