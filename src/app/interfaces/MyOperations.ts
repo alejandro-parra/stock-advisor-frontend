@@ -4,10 +4,11 @@ export interface MyOperationsData {
 }
 
 export interface Operation {
-    operationId: number,
+    _id: number,
     stockId: number,
     stockCode: string,
-    companyImg: string,
+    companyImage?: string,
+    companyImg?: string,
     stockName: string,
     creationDate: string,
     amountBought: number,

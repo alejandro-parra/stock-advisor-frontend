@@ -18,7 +18,6 @@ export class ConfirmPurchasePopupComponent implements OnInit {
   }
 
   confirmPurchase() {
-    console.log(this.operation)
     this.ref.close(this.operation);
   }
 

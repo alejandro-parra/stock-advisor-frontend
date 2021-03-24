@@ -128,7 +128,6 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.currentIcon = "pi pi-spin pi-spinner";
     
-    console.log(this.questionnaire.value);
     this.loading = true;
     let data = this.questionnaire.value;
     switch(this.currentView){
@@ -136,7 +135,6 @@ export class LoginComponent implements OnInit {
         this.signInText = "";
         this.userService.login(data).then((response) => {
           this.loading = false;
-          console.log(response);
           this.currentIcon = "";
           this.signInText = "INICIAR SESIÓN";
         }); 
@@ -145,18 +143,15 @@ export class LoginComponent implements OnInit {
       case LoginState.Register: {
         this.registerButtonText = "";
         data = {...this.questionnaireStep1.value, ...this.questionnaireStep2.value};
-        console.log(data);
         this.userService.register(data).then((response) => {
           this.loading = false;
           this.currentIcon = "";
           this.registerButtonText = "FINALIZAR REGISTRO";
-          console.log(response);
         });   
         break; 
       }
       case LoginState.ForgotPassword: {
         this.recoveryButtonText = "";
-        console.log(data);
         this.userService.sendPasswordRecovery(data).then((response) => {
           this.loading = false;
           this.currentIcon = "";
@@ -168,7 +163,6 @@ export class LoginComponent implements OnInit {
         break; 
       }
       case LoginState.UpdatePassword: {
-        console.log(data);
         data.token = this.tokenRecovery
         data.email = this.userEmailRecovery
         this.updatePasswordButtonText = "";
@@ -176,7 +170,6 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.currentIcon = "";
           this.updatePasswordButtonText = "REESTABLECER CONSTRASEÑA";
-          console.log(response);
           this.changeCurrentView(LoginState.Login);
         });
         break; 

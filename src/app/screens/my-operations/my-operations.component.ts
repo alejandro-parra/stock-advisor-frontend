@@ -10,15 +10,14 @@ import { StocksService } from 'src/app/services/stocks-service';
   styleUrls: ['./my-operations.component.scss']
 })
 export class MyOperationsComponent implements OnInit {
-  loaded = true;
+  loaded = false;
   myOperations: MyOperationsData;
-
 
   //tab navigation variables
   items: MenuItem[];
   activeItem: MenuItem;
 
-  
+
   constructor(private router: Router, private stocksService: StocksService) { }
 
   ngOnInit(): void {
@@ -26,64 +25,27 @@ export class MyOperationsComponent implements OnInit {
     this.fetchMyOperationData();
   }
 
-  fetchMyOperationData() {
-    this.myOperations = {
-      activeOperations: [
-        {
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        },{
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        },{
-          operationId: 1,
-          stockId: 1,
-          stockCode: 'TSL',
-          companyImg: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          creationDate: '12/01/2021',
-          amountBought: 3,
-          status: 'active',
-          startingPrice: 200.00,
-          closingDate: '12/03/2021',
-          closingPrice: 250.00
-        }
-      ], closedOperations: [
-
-      ]
+  async fetchMyOperationData() {
+    try {
+      let response: any = await this.stocksService.getMyOperations({});
+      this.myOperations = response as MyOperationsData;
+      this.loaded = true;
+    } catch (err) {
+      this.loaded = true;
     }
-    this.loaded = true;
   }
 
   setupUI() {
     this.items = [
-      { 
-        label: 'Activas', id:'0',
-        command:()=>{
+      {
+        label: 'Activas', id: '0',
+        command: () => {
           this.activeItem = this.items[0]
         }
       },
-      { 
-        label: 'Cerradas', id:'1',
-        command:()=>{
+      {
+        label: 'Cerradas', id: '1',
+        command: () => {
           this.activeItem = this.items[1]
         }
       }
@@ -92,7 +54,7 @@ export class MyOperationsComponent implements OnInit {
   }
 
   navigateStockDetails(operation: Operation) {
-    this.router.navigate(['stockdetails'], { queryParams: {stockId: operation.stockId}});
+    this.router.navigate(['stockdetails'], { queryParams: { stockId: operation.stockCode } });
   }
 
 

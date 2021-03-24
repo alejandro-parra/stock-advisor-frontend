@@ -6,7 +6,7 @@ export interface StockDetailsData {
     stockName: string,
     id?: number,
     stockCode: string,
-    companyImg: string,
+    companyImage: string,
     actualPrice: number,
     updateDate: string, //una fecha en string
     graphData: any,
@@ -20,6 +20,6 @@ export interface StockGraphData {
 }
 
 export interface StockGraphEntry {
-    time: string, //un string que se pueda convertir en date ejemplo '2018-10-19'
+    time: any, //un string que se pueda convertir en date ejemplo '2018-10-19'
     value: number //valor del stock en ese tiempo
 }

@@ -1,0 +1,21 @@
+<div class="p-grid bg-white p-pt-2 navbar" id="navbar">
+    <div class="p-col-3 p-d-flex p-ai-center">
+        <button 
+        pButton type="button" label=" " (click)="router.navigateByUrl('search')"
+        class="p-button-text p-button-plain p-as-center p-p-0 p-ml-1 p-ml-sm-5">
+            <img src="../../../assets/logoStock.png" alt="Logo" width="40" height="40">
+        </button>
+        <!-- <img src="../../../assets/logoStock.png" alt="Logo" width="40" height="40" class="p-ml-1 p-ml-sm-5"> -->
+    </div>
+    <div class="p-col-6 p-pb-0">
+        <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+    </div>
+    <div class="p-col-3 p-d-flex p-jc-end">
+        <button 
+        pButton type="button" label=" " (click)="userService.logout()"
+        class="p-button-text p-button-plain p-as-center p-mr-1 p-mr-sm-5">
+            <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
+        </button>
+    </div>
+</div>
+<div [style.height.px]="height"></div>
