@@ -55,11 +55,13 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   }
 
   defineActiveOperations() {
+    let newOperations = [];
     for (let operation of this.stockDetails.myOperations) {
       if (operation.status === 'active') {
-        this.activeOperations.push(operation);
+        newOperations.push(operation);
       }
     }
+    this.activeOperations = newOperations;
   }
 
   orderOperationsByStatus() {
