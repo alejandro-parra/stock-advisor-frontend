@@ -36,7 +36,6 @@ export class UserService {
       this.userInfo = JSON.parse(tempUser)
       this.authState.next(true)
       this.validateToken().then((response)=>{
-        console.log(response)
       },(reject)=>{
         this.logout()
       })
@@ -69,7 +68,6 @@ export class UserService {
     return new Promise(async resolve => {
       this.http.post('http://localhost:3000/register-user', data).subscribe((response:any)=>{
         if(response){
-          console.log(response)
           let tempUser = {
             id: response.insertedId,
             token: response.token,
@@ -86,7 +84,6 @@ export class UserService {
           resolve('exito');
         }
       }, (error) => { 
-        console.log(error)
         if(error.status == 200){
           this.modalsAlertsService.openConfirmationToast("Éxito","Cuenta registrada con éxito")
         }else{
@@ -100,7 +97,6 @@ export class UserService {
     return new Promise(async resolve => {
       this.http.post('http://localhost:3000/login-user', data).subscribe((response:any)=>{
         if(response){
-          console.log(response)
           let tempUser = {
             id: response._id,
             token: response.token,
@@ -138,13 +134,11 @@ export class UserService {
     return new Promise(async resolve => {
       this.http.post('http://localhost:3000/send-recovery-token', data).subscribe((response:any)=>{
         if(response){
-          console.log('exito')
           this.router.navigate(['login']);
           this.modalsAlertsService.openConfirmationToast("Éxito","Código enviado con éxito")
           resolve('exito');
         }
       }, (error) => { 
-        console.log(error)
         if(error.status == 200){
           this.modalsAlertsService.openConfirmationToast("Éxito","Código enviado con éxito");
           this.router.navigate(['login']);
@@ -160,13 +154,12 @@ export class UserService {
     return new Promise(async resolve => {
       this.http.post('http://localhost:3000/reset-user-password', data).subscribe((response:any)=>{
         if(response){
-          console.log('exito')
+          ('exito')
           this.router.navigate(['login']);
           this.modalsAlertsService.openConfirmationToast("Éxito","Contraseña cambiada con éxito")
           resolve('exito');
         }
       }, (error) => { 
-        console.log(error)
         if(error.status == 200){
           this.modalsAlertsService.openConfirmationToast("Éxito","Contraseña cambiada con éxito")
           this.router.navigate(['login']);

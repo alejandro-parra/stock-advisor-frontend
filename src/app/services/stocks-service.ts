@@ -30,11 +30,9 @@ export class StocksService {
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/search-stock', data, { headers: headers_object }).subscribe((response: any) => {
         if (response) {
-          console.log(response)
           resolve(response)
         }
       }, (error) => {
-        console.log(error)
         if (error.status != 200) {
           this.modalsAlertsService.openErrorToast("Error código " + error.status, error.error.error)
           reject(error)
@@ -49,11 +47,9 @@ export class StocksService {
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/get-stock-details', data, { headers: headers_object }).subscribe((response: any) => {
         if (response) {
-          console.log(response)
           resolve(response)
         }
       }, (error) => {
-        console.log(error)
         if (error.status != 200) {
           this.modalsAlertsService.openErrorToast("Error código " + error.status, error.error.error)
           this.router.navigate(['search']);
@@ -69,12 +65,10 @@ export class StocksService {
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/buy-stock', data, { headers: headers_object }).subscribe((response: any) => {
         if (response) {
-          console.log(response)
           this.modalsAlertsService.openConfirmationToast("Compra exitosa", `Ya tienes tus operaciones en ${response.stockName}`);
           resolve(response)
         }
       }, (error) => {
-        console.log(error)
         if (error.status != 200) {
           this.modalsAlertsService.openErrorToast("Error código " + error.status, error.error.error)
           reject(error)
@@ -86,19 +80,19 @@ export class StocksService {
   sellStocks(data) {
     return new Promise(async (resolve, reject) => {
       data.userId = this.userService.userInfo.id
-      console.log(data)
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/sell-stock', data, { headers: headers_object }).subscribe((response: any) => {
         if (response) {
-          console.log(response)
           this.modalsAlertsService.openConfirmationToast("Venta exitosa", `Operación cerrada exitosamente`);
           resolve(response)
         }
       }, (error) => {
-        console.log(error)
         if (error.status != 200) {
           this.modalsAlertsService.openErrorToast("Error código " + error.status, error.error.error)
           reject(error)
+        } else {
+          this.modalsAlertsService.openConfirmationToast("Venta exitosa", `Operación cerrada exitosamente`);
+          resolve('success')
         }
       })
     });
@@ -110,11 +104,9 @@ export class StocksService {
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/my-operations', data, { headers: headers_object }).subscribe((response: any) => {
         if (response) {
-          console.log(response)
           resolve(response)
         }
       }, (error) => {
-        console.log(error)
         if (error.status != 200) {
           this.modalsAlertsService.openErrorToast("Error código " + error.status, error.error.error)
           this.router.navigate(['search']);

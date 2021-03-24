@@ -32,20 +32,23 @@
                     <img src="{{operation.companyImg}}" alt="company-image">
                     <div class="search-text">
                         <p class="title">{{ operation.amountBought }} unidades</p>
-                        <p>{{ operation.creationDate }}<span *ngIf="operation.status === 'closed'">-{{ operation.closingDate }}</span></p>
+                        <p>
+                            <span *ngIf="operation.status === 'active'"><span class="green">Abierta:</span> {{ operation.creationDate }}</span>
+                            <span *ngIf="operation.status === 'closed'"><span class="red">Cerrada:</span> {{ operation.closingDate }}</span>
+                        </p>
                     </div>
                 </div>
                 <div class="results">
                     <div class="field">
-                        <p><b>${{operation.startingPrice}}</b></p>
+                        <p><b>${{operation.startingPrice.toFixed(2)}}</b></p>
                         <p>Precio de compra</p>
                     </div>
-                    <div class="field">
+                    <div class="field" *ngIf="operation.status === 'closed'">
                         <p><b [ngClass]="{'green': operation.closingPrice - operation.startingPrice > 0, 'red': operation.closingPrice - operation.startingPrice < 0 }">{{(operation.closingPrice - operation.startingPrice)/operation.closingPrice * 100}}%</b></p>
                         <p>Rendimiento</p>
                     </div>
-                    <div class="field">
-                        <p><b>${{operation.closingPrice}}</b></p>
+                    <div class="field" *ngIf="operation.status === 'closed'">
+                        <p><b>${{operation.closingPrice.toFixed(2)}}</b></p>
                         <p>Precio de venta</p>
                     </div>
                 </div>

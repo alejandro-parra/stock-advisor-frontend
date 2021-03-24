@@ -17,7 +17,6 @@ enum SearchbarIcon {
 
 export class StockSearchComponent implements OnInit {
   loaded = true;
-  demo = false;
   searchData: StockSearchEntry[] = [];
   currentIcon: SearchbarIcon = SearchbarIcon.search;
   searchResults: StockSearchEntry[] = []
@@ -25,52 +24,27 @@ export class StockSearchComponent implements OnInit {
   constructor(private router: Router, private stocksService: StocksService) { }
 
   ngOnInit(): void {
-    if (this.demo) {
-      this.searchData = [
-        {
-          stockCode: 'AWS',
-          companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'BMW',
-          _id: 1
-        },
-        {
-          stockCode: 'KFC',
-          companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-          stockName: 'Tesla',
-          _id: 2
-        }
-      ]
-    } else {
-      this.searchData = []
-    }
+    this.searchData = [];
     this.fetchStockData();
   }
 
   async fetchStockData() {
-    if (!this.demo) {
-      try {
-        let response: any = await this.stocksService.searchStocks({ searchString: "" })
-        this.searchData = response;
-        this.sortStocks();
-        this.loaded = true;
-      } catch (err) {
-        console.log(err)
-        this.loaded = true;
-      };
-    } else {
+    try {
+      let response: any = await this.stocksService.searchStocks({ searchString: "" })
+      this.searchData = response;
       this.sortStocks();
       this.loaded = true;
-    }
+    } catch (err) {
+      this.loaded = true;
+    };
   }
 
   search() {
-    console.log('search')
     this.currentIcon = SearchbarIcon.loading;
     this.searchResults = [];
     this.searchResults = this.searchData.filter((a) => {
       return a.stockName.toLowerCase().includes(this.searchString.toLowerCase())
     });
-    console.log(this.searchResults)
     this.currentIcon = SearchbarIcon.search;
   }
 
@@ -87,8 +61,7 @@ export class StockSearchComponent implements OnInit {
   }
 
   checkStockDetails(stock: StockSearchEntry, index) {
-    console.log(index)
-    this.router.navigate(['stockdetails'], { queryParams: { stockId: stock._id } });
+    this.router.navigate(['stockdetails'], { queryParams: { stockId: stock.stockCode } });
   }
 
 }

@@ -21,41 +21,11 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   activeOperations: Operation[] = [];
   chart: any;
   areaSeries: any;
-  demo = false;
   @ViewChild('graphContainer') graph: ElementRef;
 
   constructor(private router: Router, private stocksService: StocksService, private activatedRoute: ActivatedRoute, public dialogService: DialogService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    if (this.demo) {
-      this.stockDetails = {
-        stockName: 'Tesla',
-        id: 1,
-        stockCode: 'TSL',
-        companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-        actualPrice: 250.00,
-        updateDate: '21/02/2021',
-        graphData: {},
-        rateOfPrediction: 70,
-        typeOfPrediction: 'positive',
-        myOperations: [
-          {
-            _id: 1,
-            stockId: 1,
-            stockCode: 'TSL',
-            companyImage: 'http://www.abbeyroweautoglass.com/wp-content/uploads/2015/03/BMW.jpg',
-            stockName: 'Tesla',
-            creationDate: '12/01/2021',
-            amountBought: 3,
-            status: 'active',
-            startingPrice: 200.00,
-            closingDate: '12/03/2021',
-            closingPrice: 250.00
-          }
-        ]
-      }
-    }
-
     this.activatedRoute.queryParams.subscribe(params => {
       let id = params['stockId'];
       if (id) {
@@ -71,27 +41,17 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   }
 
   async fetchStockDetails() {
-    if (this.demo) {
+    try {
+      let response = await this.stocksService.getStockDetails({ stockCode: this.stockId });
+      this.stockDetails = response as StockDetailsData;
       this.setActionText();
+      this.orderOperationsByStatus();
       this.defineActiveOperations();
       this.setChart();
       this.loaded = true;
-    } else {
-      try {
-        let response = await this.stocksService.getStockDetails({ stockCode: this.stockId });
-        console.log(response);
-        this.stockDetails = response as StockDetailsData;
-        
-        this.setActionText();
-        this.defineActiveOperations();
-        this.setChart();
-        this.loaded = true;
-      } catch (err) {
-        console.log(err);
-        this.loaded = true;
-      }
+    } catch (err) {
+      this.loaded = true;
     }
-    
   }
 
   defineActiveOperations() {
@@ -100,6 +60,16 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
         this.activeOperations.push(operation);
       }
     }
+  }
+
+  orderOperationsByStatus() {
+    this.stockDetails.myOperations.sort((a,b) => {
+      if(a.status === 'active') {
+        return -1;
+      } else {
+        return 1;
+      }
+    })
   }
 
   setActionText() {
@@ -137,13 +107,12 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   }
 
   async buyStocks(operation: Operation) {
-    if (!this.demo) {
-      try {
-        let newOperation: any = this.stocksService.buyStocks(operation);
-        this.stockDetails.myOperations.push(newOperation as Operation);
-      } catch (err) {
-        console.log(err)
-      }
+    try {
+      let newOperation = await this.stocksService.buyStocks(operation);
+      this.stockDetails.myOperations.push(newOperation as Operation);
+      this.orderOperationsByStatus();
+      this.defineActiveOperations();
+    } catch (err) {
     }
   }
 
@@ -161,17 +130,18 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   }
 
   async sellStocks(operation: Operation) {
-    if (!this.demo) {
-      try {
-        let response = this.stocksService.sellStocks(operation);
-        for (let [index, history] of this.stockDetails.myOperations.entries()) {
-          if (history._id === operation._id) {
-            this.stockDetails.myOperations.splice(index, 1);
-          }
+    try {
+      let response = await this.stocksService.sellStocks(operation);
+      for (let [index, history] of this.stockDetails.myOperations.entries()) {
+        if (history._id === operation._id) {
+          this.stockDetails.myOperations[index].status = 'closed';
+          this.stockDetails.myOperations[index].closingDate = this.createDateString();
+          this.stockDetails.myOperations[index].closingPrice = this.stockDetails.actualPrice;
+          this.orderOperationsByStatus();
+          this.defineActiveOperations();
         }
-      } catch (err) {
-        console.log(err);
       }
+    } catch (err) {
     }
   }
 
@@ -191,8 +161,6 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
 
   setChart() {
     let chartElement = this.renderer.createElement('div');
-
-
     this.chart = createChart(chartElement, {
       width: this.graph.nativeElement.offsetWidth,
       height: this.graph.nativeElement.offsetHeight,
@@ -260,7 +228,6 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   }
 
   onResize(event) {
-    console.log('resize')
     this.chart.applyOptions({ width: this.graph.nativeElement.offsetWidth })
   }
 
