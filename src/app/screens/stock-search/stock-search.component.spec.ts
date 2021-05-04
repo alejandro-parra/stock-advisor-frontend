@@ -1,4 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { StockSearchComponent } from './stock-search.component';
 
@@ -8,7 +12,16 @@ describe('StockSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StockSearchComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ],
+      declarations: [ StockSearchComponent ],
+      providers: [
+        ConfirmationService,
+        MessageService,
+        DialogService
+      ]
     })
     .compileComponents();
   });
