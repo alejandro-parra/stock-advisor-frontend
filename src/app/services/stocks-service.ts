@@ -14,7 +14,7 @@ export class StocksService {
   public userInfo: any = null;
   url = 'http://localhost:3000';
 
-  constructor(private router: Router, private http: HttpClient, private modalsAlertsService: ModalsAlertsService, private userService: UserService) {
+  constructor(private router: Router, private http: HttpClient, private modalsAlertsService: ModalsAlertsService, public userService: UserService) {
   }
 
   ngOnInit() {
@@ -26,6 +26,9 @@ export class StocksService {
 
   searchStocks(data) {
     return new Promise(async (resolve, reject) => {
+      if(!this.userService.userInfo){
+        return reject("No user logged in");
+      }
       data.userId = this.userService.userInfo.id
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/search-stock', data, { headers: headers_object }).subscribe((response: any) => {
@@ -43,6 +46,9 @@ export class StocksService {
 
   getStockDetails(data) {
     return new Promise(async (resolve, reject) => {
+      if(!this.userService.userInfo){
+        return reject("No user logged in");
+      }
       data.userId = this.userService.userInfo.id
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/get-stock-details', data, { headers: headers_object }).subscribe((response: any) => {
@@ -61,6 +67,9 @@ export class StocksService {
 
   buyStocks(data) {
     return new Promise(async (resolve, reject) => {
+      if(!this.userService.userInfo){
+        return reject("No user logged in");
+      }
       data.userId = this.userService.userInfo.id
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/buy-stock', data, { headers: headers_object }).subscribe((response: any) => {
@@ -79,6 +88,9 @@ export class StocksService {
 
   sellStocks(data) {
     return new Promise(async (resolve, reject) => {
+      if(!this.userService.userInfo){
+        return reject("No user logged in");
+      }
       data.userId = this.userService.userInfo.id
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/sell-stock', data, { headers: headers_object }).subscribe((response: any) => {
@@ -100,6 +112,9 @@ export class StocksService {
 
   getMyOperations(data) {
     return new Promise(async (resolve, reject) => {
+      if(!this.userService.userInfo){
+        return reject("No user logged in");
+      }
       data.userId = this.userService.userInfo.id
       let headers_object = new HttpHeaders().set("access-token", this.userService.userInfo.token);
       this.http.post(this.url + '/my-operations', data, { headers: headers_object }).subscribe((response: any) => {

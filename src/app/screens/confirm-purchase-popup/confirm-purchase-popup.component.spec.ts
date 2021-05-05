@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-
 import { ConfirmPurchasePopupComponent } from './confirm-purchase-popup.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('ConfirmPurchasePopupComponent', () => {
   let component: ConfirmPurchasePopupComponent;
@@ -9,10 +8,8 @@ describe('ConfirmPurchasePopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmPurchasePopupComponent ],
-      providers: [
-        DynamicDialogRef,
-        DynamicDialogConfig
+      imports: [
+        AppModule
       ]
     })
     .compileComponents();

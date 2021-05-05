@@ -20,8 +20,8 @@ export class StockSearchComponent implements OnInit {
   searchData: StockSearchEntry[] = [];
   currentIcon: SearchbarIcon = SearchbarIcon.search;
   searchResults: StockSearchEntry[] = []
-  searchString: "";
-  constructor(private router: Router, private stocksService: StocksService) { }
+  searchString = "";
+  constructor(private router: Router, public stocksService: StocksService) { }
 
   ngOnInit(): void {
     this.searchData = [];
@@ -63,5 +63,4 @@ export class StockSearchComponent implements OnInit {
   checkStockDetails(stock: StockSearchEntry, index) {
     this.router.navigate(['stockdetails'], { queryParams: { stockId: stock.stockCode } });
   }
-
 }

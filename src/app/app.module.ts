@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardModule } from 'primeng/card';
@@ -29,7 +29,6 @@ import { MyOperationsComponent } from './screens/my-operations/my-operations.com
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmPurchasePopupComponent } from './screens/confirm-purchase-popup/confirm-purchase-popup.component';
 import { SelectOperationPopupComponent } from './screens/select-operation-popup/select-operation-popup.component';
-import {MenuItem} from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -68,7 +67,7 @@ import {MenuItem} from 'primeng/api';
   entryComponents: [
     
   ],
-  providers: [ConfirmationService, MessageService, DialogService],
+  providers: [ConfirmationService, MessageService, DialogService, DynamicDialogRef, DynamicDialogConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

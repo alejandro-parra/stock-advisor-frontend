@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoadingOverlayComponent } from './loading-overlay.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('LoadingOverlayComponent', () => {
   let component: LoadingOverlayComponent;
@@ -8,7 +8,9 @@ describe('LoadingOverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingOverlayComponent ]
+      imports: [
+        AppModule
+      ]
     })
     .compileComponents();
   });

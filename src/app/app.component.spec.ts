@@ -1,24 +1,12 @@
-import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-      providers: [
-        ConfirmationService,
-        MessageService,
-        DialogService
+        AppModule
       ]
     }).compileComponents();
   });

@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-
 import { SelectOperationPopupComponent } from './select-operation-popup.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('SelectOperationPopupComponent', () => {
   let component: SelectOperationPopupComponent;
@@ -9,9 +8,8 @@ describe('SelectOperationPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectOperationPopupComponent ],
-      providers: [
-        DynamicDialogRef, DynamicDialogConfig
+      imports: [
+        AppModule
       ]
     })
     .compileComponents();

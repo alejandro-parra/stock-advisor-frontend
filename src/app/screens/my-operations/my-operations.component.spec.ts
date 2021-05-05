@@ -1,10 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
-
 import { MyOperationsComponent } from './my-operations.component';
+import { AppModule } from 'src/app/app.module';
+import { By } from '@angular/platform-browser';
 
 describe('MyOperationsComponent', () => {
   let component: MyOperationsComponent;
@@ -13,14 +10,7 @@ describe('MyOperationsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientModule
-      ],
-      declarations: [ MyOperationsComponent ],
-      providers: [
-        ConfirmationService,
-        MessageService,
-        DialogService
+        AppModule
       ]
     })
     .compileComponents();
@@ -34,5 +24,15 @@ describe('MyOperationsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should switch between open and closed operations', () => {
+    console.log('should switch between open and closed operations');
+    expect(component.activeItem.id).toEqual('0');
+    component.activeItem = component.items[1];
+    expect(component.activeItem.id).toEqual('1');
+    component.activeItem = component.items[0];
+    expect(component.activeItem.id).toEqual('0');
+    console.log('switch between open and closed operations successful');
   });
 });
