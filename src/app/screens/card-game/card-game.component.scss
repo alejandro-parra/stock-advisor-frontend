@@ -1,0 +1,71 @@
+.main-container {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex-flow: wrap;
+}
+
+.score {
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  justify-content: flex-start;
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
+.card-container {
+  img {
+    width: 25%;
+    padding: 1rem;
+  }
+}
+
+.decision-button {
+  padding: 1rem 2rem 1rem 2rem;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  margin: 1rem;
+}
+
+.up {
+  background-color: green;
+}
+
+.down {
+  background-color: red;
+}
+
+.score-text {
+  position: absolute;
+  left: calc(26.2%);
+  top: calc(42.5% - 2rem);
+  width: calc(25% - 2rem);
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.lose {
+  color: red;
+  width: 100%;
+  text-align: center;
+}

@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
           email: ["",[Validators.required, Validators.email]],
         });
         this.questionnaireStep2 = this.fb.group({
-          password: ["", Validators.required],
+          password: ["", [Validators.required, Validators.minLength(8)]],
           repeatPassword: ["", Validators.required]
         }, {validators: this.passwordMatch});
         this.questionnaire = this.fb.group({

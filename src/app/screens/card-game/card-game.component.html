@@ -1,0 +1,29 @@
+<div class="main-container">
+  <div class="row score-container">
+    <div class="score">
+      <p><b>Max Score:</b></p>
+      <p>{{maxScore}}</p>
+    </div>
+    <div class="score">
+      <p><b>Current Score:</b></p>
+      <p>{{currentScore}}</p>
+    </div>
+  </div>
+  <div class="row card-container">
+    <img src="{{backCard}}" alt="card back side"/>
+    <img src="{{currentCard.src}}" alt="card front side"/>
+    <p class="score-text">Deck remaining: {{remainingCards.length}}</p>
+  </div>  
+  <div class="row button-row">
+    <button class="decision-button down" *ngIf="playing" (click)="decide('down')">
+      Abajo
+    </button>
+    <button class="decision-button up" *ngIf="playing" (click)="decide('up')">
+      Arriba
+    </button>
+    <p *ngIf="!playing" class="lose">OOPS, ¡Perdiste!</p>
+    <button class="decision-button" *ngIf="!playing" (click)="restartGame()">
+      Jugar de nuevo
+    </button>
+  </div>
+</div>

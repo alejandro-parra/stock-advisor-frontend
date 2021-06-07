@@ -18,6 +18,7 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   stockDetails: StockDetailsData;
   loaded = false;
   actionText = "comprar";
+  actionDescription = "porque hubo una inflexión hacia la alza en el histórico de esta Compañía.";
   activeOperations: Operation[] = [];
   chart: any;
   areaSeries: any;
@@ -77,8 +78,10 @@ export class StockDetailsComponent implements OnInit, AfterViewInit {
   setActionText() {
     if (this.stockDetails.typeOfPrediction === 'positive') {
       this.actionText = "comprar";
+      this.actionDescription = "porque hubo una inflexión hacia la alza en el histórico de esta Compañía.";
     } else {
       this.actionText = "vender";
+      this.actionDescription = "porque hubo una inflexión hacia la baja en el histórico de esta Compañía.";
     }
   }
 

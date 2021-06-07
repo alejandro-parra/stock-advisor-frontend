@@ -2,7 +2,9 @@
     <section class="section" *ngIf="currentView===loginState.Login">
         <p-card class="login-card" title="Login">
             <div class="p-grid p-fluid p-justify-center login-formGroup-container">
-                
+                <div class="image-container">
+                    <img src="../../../assets/logoStock.png">
+                </div>
                 <div class="login-text-div">
                     INICIA SESIÓN Y DISFRUTA DE LA MEJOR <br> EXPERIENCIA DE TRADING
                 </div>
@@ -75,16 +77,20 @@
                         <div class="p-inputgroup second-input">
                             <input placeholder="Contraseña" pInputText formControlName="password" type="password"/>
                         </div>
-                        <div *ngFor="let validation of validations.standard">
+                        <div *ngFor="let validation of validations.standardPassword">
                             <small class="p-invalid" *ngIf="questionnaireStep2.get('password').hasError(validation.type) && (questionnaireStep2.get('password').dirty || questionnaireStep2.get('password').touched)">{{validation.message}}</small>
                         </div>
-    
+                        <small >Las contraseñas deben medir minimo 8 caracteres</small>
                         <div class="p-inputgroup second-input">
                             <input placeholder="Repetir Contraseña" pInputText formControlName="repeatPassword" type="password"/>
                         </div>
                         <div *ngFor="let validation of validations.confirmPassword">
                             <small class="p-invalid" *ngIf="questionnaireStep2.get('repeatPassword').hasError(validation.type) && (questionnaireStep2.get('repeatPassword').dirty || questionnaireStep2.get('repeatPassword').touched)">{{validation.message}}</small>
                         </div>
+
+                        <ng-container *ngIf="questionnaireStep2.errors !== null">
+                            <small class="p-invalid" *ngIf="questionnaireStep2.errors.passwordMismatch && (questionnaireStep2.get('repeatPassword').dirty || questionnaireStep2.get('repeatPassword').touched)">Las contraseñas no coinciden</small>
+                        </ng-container>
                         <div class="second-input" style="text-align: center;">
                             <p-button class="login-button" [label]="registerButtonText" [icon]="currentIcon" (onClick)="onSubmit()" [disabled]="!questionnaireStep2.valid"></p-button>
                         </div>
