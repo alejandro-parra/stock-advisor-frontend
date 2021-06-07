@@ -10,27 +10,29 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { PasswordModule} from 'primeng/password';
+import { PasswordModule } from 'primeng/password';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { StepsModule } from 'primeng/steps';
-import { ScrollPanelModule} from 'primeng/scrollpanel';
-import { TableModule} from 'primeng/table';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
 import { LoginComponent } from './screens/login/login.component';
 import { NavbarComponent } from './screens/navbar/navbar.component';
 import { StockSearchComponent } from './screens/stock-search/stock-search.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MenubarModule} from 'primeng/menubar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenubarModule } from 'primeng/menubar';
 import { LoadingOverlayComponent } from './screens/loading-overlay/loading-overlay.component';
 import { StockDetailsComponent } from './screens/stock-details/stock-details.component';
 import { MyOperationsComponent } from './screens/my-operations/my-operations.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmPurchasePopupComponent } from './screens/confirm-purchase-popup/confirm-purchase-popup.component';
 import { SelectOperationPopupComponent } from './screens/select-operation-popup/select-operation-popup.component';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { CardGameComponent } from './screens/card-game/card-game.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -65,10 +67,16 @@ import { CardGameComponent } from './screens/card-game/card-game.component';
     ScrollingModule,
     BrowserAnimationsModule,
     MenubarModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ServiceWorkerModule.register('my-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   entryComponents: [
-    
+
   ],
   providers: [ConfirmationService, MessageService, DialogService],
   bootstrap: [AppComponent]
