@@ -30,6 +30,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmPurchasePopupComponent } from './screens/confirm-purchase-popup/confirm-purchase-popup.component';
 import { SelectOperationPopupComponent } from './screens/select-operation-popup/select-operation-popup.component';
 import {MenuItem} from 'primeng/api';
+import { CardGameComponent } from './screens/card-game/card-game.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MenuItem} from 'primeng/api';
     StockDetailsComponent,
     MyOperationsComponent,
     ConfirmPurchasePopupComponent,
-    SelectOperationPopupComponent
+    SelectOperationPopupComponent,
+    CardGameComponent
   ],
   imports: [
     BrowserModule,

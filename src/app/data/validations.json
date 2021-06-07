@@ -5,6 +5,16 @@
             "message": "Campo requerido"
         }
     ],
+    "standardPassword": [
+        {
+            "type": "required",
+            "message": "Campo requerido"
+        },
+        {
+            "type": "minLength",
+            "message": "La contraseña debe medir al menos 8 caracteres"
+        }
+    ],
     "confirmPassword": [
         {
             "type": "required",

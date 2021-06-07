@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CardGameComponent } from './screens/card-game/card-game.component';
 import { LoginComponent } from './screens/login/login.component';
 import { MyOperationsComponent } from './screens/my-operations/my-operations.component';
 import { StockDetailsComponent } from './screens/stock-details/stock-details.component';
@@ -31,6 +32,11 @@ const routes: Routes = [
     path: 'stockdetails',
     canActivate: [AuthGuard],
     component: StockDetailsComponent,
+    children: [
+    ]
+  },{
+    path: 'cards',
+    component: CardGameComponent,
     children: [
     ]
   },
