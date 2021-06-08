@@ -1,7 +1,5 @@
-
-
-
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,13 +7,13 @@
   <title>Offline Cards</title>
   <style>
     .main-container {
-    margin-top: 2rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+      margin-top: 2rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
-  
+
     .row {
       width: 100%;
       display: flex;
@@ -25,7 +23,7 @@
       align-items: flex-start;
       flex-flow: wrap;
     }
-  
+
     .score {
       font-size: 3rem;
       display: flex;
@@ -33,18 +31,18 @@
       width: 30%;
       justify-content: flex-start;
     }
-  
+
     .score p {
-        margin-top: 0;
-        margin-bottom: 0;
-        text-align: center;
+      margin-top: 0;
+      margin-bottom: 0;
+      text-align: center;
     }
-  
+
     .card-container img {
       width: 25%;
       padding: 1rem;
     }
-  
+
     .decision-button {
       padding: 1rem 2rem 1rem 2rem;
       border-radius: 10px;
@@ -53,15 +51,15 @@
       border: none;
       margin: 1rem;
     }
-  
+
     .up {
       background-color: green;
     }
-  
+
     .down {
       background-color: red;
     }
-  
+
     .score-text {
       position: absolute;
       left: calc(26.2%);
@@ -72,7 +70,7 @@
       font-size: 2rem;
       background-color: rgba(0, 0, 0, 0.6);
     }
-  
+
     .lose {
       color: red;
       width: 100%;
@@ -80,6 +78,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="main-container">
     <div class="row score-container">
@@ -93,15 +92,15 @@
       </div>
     </div>
     <div class="row card-container">
-      <img src="./assets/cards/2B.svg" alt="card back side"/>
-      <img src="./assets/cards/1J.svg" id="currentCard" alt="card front side"/>
+      <img src="./assets/cards/2B.svg" alt="card back side" />
+      <img src="./assets/cards/1J.svg" id="currentCard" alt="card front side" />
       <p class="score-text">Deck remaining: <span id="numRemainingCards"></span></p>
-    </div>  
+    </div>
     <div class="row button-row">
-      <button class="decision-button down" id="upButton">
+      <button class="decision-button down" id="downButton">
         Abajo
       </button>
-      <button class="decision-button up" id="downButton">
+      <button class="decision-button up" id="upButton">
         Arriba
       </button>
       <p class="lose" id="loseText">OOPS, ¡Perdiste!</p>
@@ -133,9 +132,9 @@
     const createCards = () => {
       let newDeck = [];
       values.forEach((value, index) => {
-        for(let tier of tiers) {
+        for (let tier of tiers) {
           newDeck.push({
-            src: `../../assets/cards/${value}${tier}.svg`,
+            src: `./assets/cards/${value}${tier}.svg`,
             value: index
           })
         }
@@ -163,18 +162,18 @@
     };
 
     const decide = (move) => {
-      if(remainingCards.length === 0) {
+      if (remainingCards.length === 0) {
         createCards();
         shuffleCards();
       }
-      if((move === 'up' && remainingCards[remainingCards.length -1].value > currentCard.value) || (move === 'down' && remainingCards[remainingCards.length -1].value < currentCard.value)){
+      if ((move === 'up' && remainingCards[remainingCards.length - 1].value > currentCard.value) || (move === 'down' && remainingCards[remainingCards.length - 1].value < currentCard.value)) {
         currentScore += 1;
       } else {
         document.getElementById('loseText').style.display = 'block';
         document.getElementById('restartButton').style.display = 'block';
         document.getElementById('upButton').style.display = 'none';
         document.getElementById('downButton').style.display = 'none';
-        if(maxScore < currentScore){
+        if (maxScore < currentScore) {
           maxScore = currentScore;
           localStorage.setItem('CARDSMAXSCORE', JSON.stringify(maxScore));
         }
@@ -193,14 +192,15 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const localScore = localStorage.getItem('CARDSMAXSCORE');
-      if(localScore) {
+      if (localScore) {
         maxScore = parseInt(localScore);
       }
       restartGame();
-      document.getElementById('upButton').addEventListener('click', () => {decide('up')});
-      document.getElementById('downButton').addEventListener('click', () => {decide('down')});
+      document.getElementById('upButton').addEventListener('click', () => { decide('up') });
+      document.getElementById('downButton').addEventListener('click', () => { decide('down') });
       document.getElementById('restartButton').addEventListener('click', restartGame);
     });
   </script>
 </body>
+
 </html>
