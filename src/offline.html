@@ -1,1 +1,206 @@
-<h1>valio verga</h1>
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Cards</title>
+  <style>
+    .main-container {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    }
+  
+    .row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-content: flex-start;
+      align-items: flex-start;
+      flex-flow: wrap;
+    }
+  
+    .score {
+      font-size: 3rem;
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+      justify-content: flex-start;
+    }
+  
+    .score p {
+        margin-top: 0;
+        margin-bottom: 0;
+        text-align: center;
+    }
+  
+    .card-container img {
+      width: 25%;
+      padding: 1rem;
+    }
+  
+    .decision-button {
+      padding: 1rem 2rem 1rem 2rem;
+      border-radius: 10px;
+      background-color: black;
+      color: white;
+      border: none;
+      margin: 1rem;
+    }
+  
+    .up {
+      background-color: green;
+    }
+  
+    .down {
+      background-color: red;
+    }
+  
+    .score-text {
+      position: absolute;
+      left: calc(26.2%);
+      top: calc(42.5% - 2rem);
+      width: calc(25% - 2rem);
+      text-align: center;
+      color: white;
+      font-size: 2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  
+    .lose {
+      color: red;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="row score-container">
+      <div class="score">
+        <p><b>Max Score:</b></p>
+        <p id="maxScore"></p>
+      </div>
+      <div class="score">
+        <p><b>Current Score:</b></p>
+        <p id="currentScore"></p>
+      </div>
+    </div>
+    <div class="row card-container">
+      <img src="./assets/cards/2B.svg" alt="card back side"/>
+      <img src="./assets/cards/1J.svg" id="currentCard" alt="card front side"/>
+      <p class="score-text">Deck remaining: <span id="numRemainingCards"></span></p>
+    </div>  
+    <div class="row button-row">
+      <button class="decision-button down" id="upButton">
+        Abajo
+      </button>
+      <button class="decision-button up" id="downButton">
+        Arriba
+      </button>
+      <p class="lose" id="loseText">OOPS, ¡Perdiste!</p>
+      <button class="decision-button" id="restartButton">
+        Jugar de nuevo
+      </button>
+    </div>
+  </div>
+  <script>
+    const tiers = ['H', 'D', 'C', 'S'];
+    const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
+    var remainingCards = [];
+    var maxScore = 0;
+    var currentScore = 0;
+    var currentCard = null;
+
+    const restartGame = () => {
+      currentScore = 0;
+      document.getElementById('upButton').style.display = 'block';
+      document.getElementById('downButton').style.display = 'block';
+      document.getElementById('loseText').style.display = 'none';
+      document.getElementById('restartButton').style.display = 'none';
+      createCards();
+      shuffleCards();
+      pushNextCard();
+      updateUI();
+    };
+
+    const createCards = () => {
+      let newDeck = [];
+      values.forEach((value, index) => {
+        for(let tier of tiers) {
+          newDeck.push({
+            src: `../../assets/cards/${value}${tier}.svg`,
+            value: index
+          })
+        }
+      });
+      remainingCards = newDeck;
+    };
+
+    const shuffleCards = () => {
+      let currentIndex = remainingCards.length;
+      let randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        [remainingCards[currentIndex], remainingCards[randomIndex]] = [
+          remainingCards[randomIndex], remainingCards[currentIndex]];
+      }
+    };
+
+    const pushNextCard = () => {
+      currentCard = remainingCards.pop();
+    };
+
+    const decide = (move) => {
+      if(remainingCards.length === 0) {
+        createCards();
+        shuffleCards();
+      }
+      if((move === 'up' && remainingCards[remainingCards.length -1].value > currentCard.value) || (move === 'down' && remainingCards[remainingCards.length -1].value < currentCard.value)){
+        currentScore += 1;
+      } else {
+        document.getElementById('loseText').style.display = 'block';
+        document.getElementById('restartButton').style.display = 'block';
+        document.getElementById('upButton').style.display = 'none';
+        document.getElementById('downButton').style.display = 'none';
+        if(maxScore < currentScore){
+          maxScore = currentScore;
+          localStorage.setItem('CARDSMAXSCORE', JSON.stringify(maxScore));
+        }
+      }
+      pushNextCard();
+      updateUI();
+    };
+
+    const updateUI = () => {
+      document.getElementById('maxScore').innerHTML = maxScore;
+      document.getElementById('numRemainingCards').innerHTML = remainingCards.length;
+      document.getElementById('currentScore').innerHTML = currentScore;
+      document.getElementById('currentCard').src = currentCard.src;
+    };
+
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const localScore = localStorage.getItem('CARDSMAXSCORE');
+      if(localScore) {
+        maxScore = parseInt(localScore);
+      }
+      restartGame();
+      document.getElementById('upButton').addEventListener('click', () => {decide('up')});
+      document.getElementById('downButton').addEventListener('click', () => {decide('down')});
+      document.getElementById('restartButton').addEventListener('click', restartGame);
+    });
+  </script>
+</body>
+</html>
